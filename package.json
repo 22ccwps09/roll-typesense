@@ -1,12 +1,12 @@
 {
-  "name": "showcase-ecommerce-store",
+  "name": "aa-typesense-tester",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "parcel index.html --port 3000",
     "indexer": "node scripts/populateTypesenseIndex.js",
     "typesenseServer": "docker run -i -p 8108:8108 -v`pwd`/typesense-server-data/:/data typesense/typesense:0.20.0 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
-    "build": "parcel build index.html --public-url https://ecommerce-store.typesense.org",
+    "build": "parcel build index.html --public-url https://gifted-cray-fb4a47.netlify.app/",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
