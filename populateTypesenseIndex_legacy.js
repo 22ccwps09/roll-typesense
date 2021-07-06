@@ -16,78 +16,97 @@ module.exports = (async () => {
   });
 
   const schema = {
-    name: "items",
+    name: "products",
     num_documents: 0,
     fields: [
       {
-        name: "reference_code",
+        name: "name",
         type: "string",
         facet: false
       },
       {
-        name: "title_ko",
+        name: "description",
         type: "string",
         facet: false
       },
       {
-        name: "title_en",
+        name: "brand",
+        type: "string",
+        facet: true
+      },
+      {
+        name: "categories",
+        type: "string[]",
+        facet: true
+      },
+      {
+        name: "categories.lvl0",
+        type: "string[]",
+        facet: true
+      },
+      {
+        name: "categories.lvl1",
+        type: "string[]",
+        facet: true,
+        optional: true
+      },
+      {
+        name: "categories.lvl2",
+        type: "string[]",
+        facet: true,
+        optional: true
+      },
+      {
+        name: "categories.lvl3",
+        type: "string[]",
+        facet: true,
+        optional: true
+      },
+      {
+        name: "price",
+        type: "float",
+        facet: true
+      },
+      {
+        name: "image",
         type: "string",
         facet: false
-      },      
+      },
       {
-        name: "description_ko",
-        type: "string",
+        name: "popularity",
+        type: "int32",
         facet: false
       },
       {
-        name: "description_en",
-        type: "string",
-        facet: false
-      },      
-      {
-        name: "creators",
-        type: "string",
+        name: "free_shipping",
+        type: "bool",
         facet: true
       },
       {
-        name: "sources",
-        type: "string",
+        name: "rating",
+        type: "int32",
         facet: true
-      },
-      {
-        name: "venues",
-        type: "string",
-        facet: true
-      },                 
-      {
-        name: "media_type",
-        type: "string",
-        facet: true
-      },
-      {
-        name: "public_access_status",
-        type: "string",
-        facet: true
-      },
+      }
     ],
+    default_sorting_field: "popularity"
   };
 
   console.log("Populating index in Typesense");
 
-  const items = require("./data/items.json");
+  const products = require("./data/ecommerce.json");
 
   let reindexNeeded = false;
   try {
-    const collection = await typesense.collections("items").retrieve();
+    const collection = await typesense.collections("products").retrieve();
     console.log("Found existing schema");
     // console.log(JSON.stringify(collection, null, 2));
     if (
-      collection.num_documents !== items.length ||
+      collection.num_documents !== products.length ||
       process.env.FORCE_REINDEX === "true"
     ) {
       console.log("Deleting existing schema");
       reindexNeeded = true;
-      await typesense.collections("items").delete();
+      await typesense.collections("products").delete();
     }
   } catch (e) {
     reindexNeeded = true;
@@ -102,7 +121,7 @@ module.exports = (async () => {
   await typesense.collections().create(schema);
 
   // const collectionRetrieved = await typesense
-  //   .collections("items")
+  //   .collections("products")
   //   .retrieve();
   // console.log("Retrieving created schema: ");
   // console.log(JSON.stringify(collectionRetrieved, null, 2));
@@ -110,13 +129,21 @@ module.exports = (async () => {
   console.log("Adding records: ");
 
   // Bulk Import
-
+  products.forEach(product => {
+    product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
+    product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
+    product.categories.forEach((category, index) => {
+      product[`categories.lvl${index}`] = [
+        product.categories.slice(0, index + 1).join(" > ")
+      ];
+    });
+  });
 
   try {
     const returnData = await typesense
-      .collections("items")
+      .collections("products")
       .documents()
-      .import(items);
+      .import(products);
     console.log(returnData);
     console.log("Done indexing.");
 

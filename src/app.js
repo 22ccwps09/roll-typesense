@@ -78,7 +78,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     // The following parameters are directly passed to Typesense's search API endpoint.
     //  So you can pass any parameters supported by the search endpoint below.
     //  queryBy is required.
-    queryBy: 'name,categories',
+    queryBy: 'title_ko',
     numTypos: 1,
     typoTokensThreshold: 0,
     // groupBy: "categories",
@@ -89,7 +89,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
-  indexName: 'products',
+  indexName: 'items',
   routing: true,
 });
 
@@ -119,12 +119,33 @@ search.addWidgets([
   refinementList({
     limit: 10,
     showMoreLimit: 50,
-    container: '#brand-list',
-    attribute: 'brand',
-    searchable: true,
+    container: '#media-type',
+    attribute: 'media_type',
+    searchable: false,
     searchablePlaceholder: 'Search brands',
     showMore: true,
-    sortBy: ['name:asc', 'count:desc'],
+    sortBy: [],
+    cssClasses: {
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
+      searchableSubmit: 'd-none',
+      searchableReset: 'd-none',
+      showMore: 'btn btn-secondary btn-sm',
+      list: 'list-unstyled',
+      count: 'badge text-dark-2 ml-2',
+      label: 'd-flex align-items-center',
+      checkbox: 'mr-2',
+    },    
+  }),
+  refinementList({
+    limit: 10,
+    showMoreLimit: 50,
+    container: '#source-list',
+    attribute: 'sources',
+    searchable: false,
+    searchablePlaceholder: 'Search brands',
+    showMore: true,
+    sortBy: [],
     cssClasses: {
       searchableInput:
         'form-control form-control-sm form-control-secondary mb-2 border-light-2',
@@ -136,8 +157,8 @@ search.addWidgets([
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },
-  }),
-  hierarchicalMenu({
+  }), 
+/*  hierarchicalMenu({
     container: '#categories-hierarchical-menu',
     showParentLevel: true,
     rootPath: 'Cell Phones',
@@ -156,8 +177,8 @@ search.addWidgets([
       selectedItem: 'text-primary font-weight-bold',
       parentItem: 'text-dark font-weight-bold',
     },
-  }),
-  toggleRefinement({
+  }),*/
+/*  toggleRefinement({
     container: '#toggle-refinement',
     attribute: 'free_shipping',
     templates: {
@@ -183,8 +204,8 @@ search.addWidgets([
       disabledItem: 'text-muted',
       selectedItem: 'font-weight-bold text-primary',
     },
-  }),
-  sortBy({
+  }),*/
+/*  sortBy({
     container: '#sort-by',
     items: [
       { label: 'Relevancy', value: 'products' },
@@ -194,33 +215,31 @@ search.addWidgets([
     cssClasses: {
       select: 'custom-select custom-select-sm',
     },
-  }),
+  }),*/
   hits({
     container: '#hits',
     templates: {
       item: `
         <div>
-            <div class="row image-container">
-                <div class="col-md d-flex align-items-end justify-content-center">
-                    <img src="{{image}}" alt="{{name}}" />
-                </div>
-            </div>
             <div class="row mt-5">
                 <div class="col-md">
-                    <h5>{{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}</h5>
+                    <h5>{{#helpers.highlight}}{ "attribute": "title_ko" }{{/helpers.highlight}}</h5>
                 </div>
             </div>
-
             <div class="row mt-2">
                 <div class="col-md">
-                  {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
+                  {{#helpers.highlight}}{ "attribute": "description_ko" }{{/helpers.highlight}}
                 </div>
             </div>
-
+            <div class="row mt-2">
+                <div class="col-md">
+                  {{#helpers.highlight}}{ "attribute": "description_en" }{{/helpers.highlight}}
+                </div>
+            </div>
             <div class="row mt-auto">
               <div class="col-md">
-                <div class="hit-price font-weight-bold mt-4">\${{price}}</div>
-                <div class="hit-rating">Rating: {{rating}}/5</div>
+                <div class="hit-price font-weight-bold mt-4">출처:{{sources}}</div>
+                <div class="hit-rating">장소:{{venues}}</div>
               </div>
             </div>
         </div>
