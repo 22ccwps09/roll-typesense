@@ -223,17 +223,17 @@ search.addWidgets([
         <div>
             <div class="row mt-5">
                 <div class="col-md">
-                    <h5>{{#helpers.highlight}}{ "attribute": "title_ko" }{{/helpers.highlight}}</h5>
+                    <h5>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h5>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md">
-                  {{#helpers.highlight}}{ "attribute": "description_ko" }{{/helpers.highlight}}
+                  {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md">
-                  {{#helpers.highlight}}{ "attribute": "description_en" }{{/helpers.highlight}}
+                  {{#helpers.highlight}}{ "attribute": "shotlist" }{{/helpers.highlight}}
                 </div>
             </div>
             <div class="row mt-auto">
