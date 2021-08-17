@@ -25,25 +25,40 @@ module.exports = (async () => {
         facet: false
       },
       {
-        name: "title_ko",
+        name: "rg",
         type: "string",
         facet: false
       },
       {
-        name: "title_en",
+        name: "weight",
         type: "string",
         facet: false
       },      
       {
-        name: "description_ko",
+        name: "series",
         type: "string",
         facet: false
       },
       {
-        name: "description_en",
+        name: "file",
         type: "string",
         facet: false
-      },      
+      },
+      {
+        name: "file_number",
+        type: "string",
+        facet: false
+      }, 
+      {
+        name: "local_identifier",
+        type: "string",
+        facet: false
+      },
+      {
+        name: "date",
+        type: "string",
+        facet: false
+      },                           
       {
         name: "creators",
         type: "string",
@@ -58,14 +73,34 @@ module.exports = (async () => {
         name: "venues",
         type: "string",
         facet: true
-      },                 
-      {
-        name: "media_type",
-        type: "string",
-        facet: true
       },
       {
-        name: "public_access_status",
+        name: "title",
+        type: "string",
+        facet: false
+      },
+      {
+        name: "description",
+        type: "string",
+        facet: false
+      },
+      {
+        name: "shotlist",
+        type: "string",
+        facet: false
+      },
+      {
+        name: "link",
+        type: "string",
+        facet: false
+      },
+      {
+        name: "components",
+        type: "string",
+        facet: false
+      },                                            
+      {
+        name: "media_type",
         type: "string",
         facet: true
       },
