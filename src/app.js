@@ -78,7 +78,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     // The following parameters are directly passed to Typesense's search API endpoint.
     //  So you can pass any parameters supported by the search endpoint below.
     //  queryBy is required.
-    queryBy: 'title_ko',
+    queryBy: 'title',
     numTypos: 1,
     typoTokensThreshold: 0,
     // groupBy: "categories",
