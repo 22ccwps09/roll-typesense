@@ -20,35 +20,40 @@ module.exports = (async () => {
     num_documents: 0,
     fields: [
       {
-        name: "reference_code",
+        name: "acquisition_transfer",
         type: "string",
+        facet: true
+      },
+      {
+        name: "public_access_status",
+        type: "string",
+        facet: false
+      },          
+      {
+        name: "reference_code",
+        type: "int32",
         facet: false
       },
       {
         name: "rg",
         type: "string",
-        facet: false
+        facet: true
       },
       {
         name: "weight",
-        type: "string",
+        type: "int32",
         facet: false
       },      
       {
         name: "series",
         type: "string",
-        facet: false
+        facet: true
       },
       {
         name: "file",
         type: "string",
         facet: false
       },
-      {
-        name: "file_number",
-        type: "string",
-        facet: false
-      }, 
       {
         name: "local_identifier",
         type: "string",
@@ -98,7 +103,12 @@ module.exports = (async () => {
         name: "components",
         type: "string",
         facet: false
-      },                                            
+      },
+      {
+        name: "url",
+        type: "string",
+        facet: false
+      },                                                   
       {
         name: "media_type",
         type: "string",

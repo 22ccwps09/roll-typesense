@@ -78,10 +78,9 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     // The following parameters are directly passed to Typesense's search API endpoint.
     //  So you can pass any parameters supported by the search endpoint below.
     //  queryBy is required.
-    queryBy: 'title',
+    queryBy: 'description', 
     numTypos: 1,
     typoTokensThreshold: 0,
-    // groupBy: "categories",
     // groupLimit: 1
     // pinnedHits: "23:2"
   },
@@ -99,7 +98,7 @@ search.addWidgets([
     container: '#searchbox',
     showSubmit: false,
     showReset: false,
-    placeholder: 'Search for products... ',
+    placeholder: 'Search for items... ',
     autofocus: false,
     cssClasses: {
       input: 'form-control form-control-sm border border-light text-dark',
@@ -119,11 +118,11 @@ search.addWidgets([
   refinementList({
     limit: 10,
     showMoreLimit: 50,
-    container: '#media-type',
-    attribute: 'media_type',
+    container: '#acquisition-transfer',
+    attribute: 'acquisition_transfer',
     searchable: false,
     searchablePlaceholder: 'Search brands',
-    showMore: true,
+    showMore: false,
     sortBy: [],
     cssClasses: {
       searchableInput:
@@ -136,7 +135,28 @@ search.addWidgets([
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },    
-  }),
+  }),   
+  refinementList({
+    limit: 10,
+    showMoreLimit: 50,
+    container: '#media-type',
+    attribute: 'media_type',
+    searchable: false,
+    searchablePlaceholder: 'Search brands',
+    showMore: false,
+    sortBy: [],
+    cssClasses: {
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
+      searchableSubmit: 'd-none',
+      searchableReset: 'd-none',
+      showMore: 'btn btn-secondary btn-sm',
+      list: 'list-unstyled',
+      count: 'badge text-dark-2 ml-2',
+      label: 'd-flex align-items-center',
+      checkbox: 'mr-2',
+    },    
+  }), 
   refinementList({
     limit: 10,
     showMoreLimit: 50,
@@ -281,9 +301,12 @@ search.addWidgets([
             <div class="row mt-auto">
               <div class="col-md">
                 <div class="hit-price font-weight-bold mt-4">출처:{{sources}}</div>
-                <div class="hit-rating">장소:{{venues}}</div>
+                <div class="hit-rating font-weight-bold">장소:{{venues}}</div>
+                <div class="hit-rating font-weight-bold">생산자:{{creators}}</div>
+                <div class="hit-rating font-weight-bold">주제:{{subjects}}</div>
               </div>
             </div>
+            <a href="{{url}}">[아이템 보기]</a>  
         </div>
       `,
     },
