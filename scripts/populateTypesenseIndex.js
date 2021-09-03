@@ -80,6 +80,11 @@ module.exports = (async () => {
         facet: true
       },
       {
+        name: "subjects",
+        type: "string",
+        facet: true
+      },      
+      {
         name: "title",
         type: "string",
         facet: false

@@ -219,7 +219,28 @@ search.addWidgets([
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },
-  }),    
+  }),  
+  refinementList({
+    limit: 10,
+    showMoreLimit: 50,
+    container: '#subjects-list',
+    attribute: 'subjects',
+    searchable: false,
+    searchablePlaceholder: 'Search Subjects(Sires)',
+    showMore: true,
+    sortBy: [],
+    cssClasses: {
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
+      searchableSubmit: 'd-none',
+      searchableReset: 'd-none',
+      showMore: 'btn btn-secondary btn-sm',
+      list: 'list-unstyled',
+      count: 'badge text-dark-2 ml-2',
+      label: 'd-flex align-items-center',
+      checkbox: 'mr-2',
+    },
+  }), 
 /*  hierarchicalMenu({
     container: '#categories-hierarchical-menu',
     showParentLevel: true,
@@ -242,7 +263,7 @@ search.addWidgets([
   }),*/
 /*  toggleRefinement({
     container: '#toggle-refinement',
-    attribute: 'free_shipping',
+    attribute: 'acquisition_transfer',
     templates: {
       labelText: 'Free shipping',
     },
@@ -250,12 +271,12 @@ search.addWidgets([
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },
-  }),
-  rangeSlider({
-    container: '#price-range-slider',
-    attribute: 'price',
-  }),
-  ratingMenu({
+  }),*/
+/*  rangeSlider({
+    container: '#reference-range-slider',
+    attribute: 'reference_code',
+  }),*/
+/*  ratingMenu({
     container: '#rating-menu',
     attribute: 'rating',
     cssClasses: {
@@ -267,17 +288,17 @@ search.addWidgets([
       selectedItem: 'font-weight-bold text-primary',
     },
   }),*/
-/*  sortBy({
+  sortBy({
     container: '#sort-by',
     items: [
-      { label: 'Relevancy', value: 'products' },
-      { label: 'Price (asc)', value: 'products/sort/price:asc' },
-      { label: 'Price (desc)', value: 'products/sort/price:desc' },
+      { label: 'Relevancy', value: 'items' },
+      { label: 'reference_code (asc)', value: 'items/sort/reference_code:asc' },
+      { label: 'reference_code (desc)', value: 'items/sort/reference_code:desc' },
     ],
     cssClasses: {
       select: 'custom-select custom-select-sm',
     },
-  }),*/
+  }),
   hits({
     container: '#hits',
     templates: {
