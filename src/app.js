@@ -306,7 +306,7 @@ search.addWidgets([
         <div>
           <div class="row">
               <div class="col-md">
-                  <a href="{{url}}"><img class="w-100" src="{{components}}" alt="{{title}}"></a> 
+                  <a href="https://ccwps.org/items{{url}}"><img class="w-100" src="{{components}}" alt="{{title}}"></a> 
               </div>
           </div>
           <div class="row mt-5">
