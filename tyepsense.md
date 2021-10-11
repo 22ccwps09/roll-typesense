@@ -1,30 +1,59 @@
-# tyepsense
-## install
-```
-sudo su
-wget https://dl.typesense.org/releases/0.20.0/typesense-server-0.20.0-amd64.deb
-sudo apt install ./typesense-server-0.20.0-amd64.deb
-```
-## configuration
-https://typesense.org/docs/0.20.0/guide/configure-typesense.html#using-a-configuration-file
++## configuration
+https://typesense.org/docs/0.21.0/guide/configure-typesense.html
 ```bash
 # /etc/typesense/typesense-server.ini
 [server]
+
 api-address = 0.0.0.0
 api-port = 8108
 data-dir = /var/lib/typesense
-api-key = RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s
+api-key = jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ
 log-dir = /var/log/typesense
-admin-key = 21RryKN5IDoEkFAiDXy3ldzzoFrZJjP5
-search-only-key = ZuboD4RzGyCh6mBc8udl2gvm88PPUmw4
+
+admin-key(id=1) = hLVboPwrYJZ45JgAULx2kK1nMv5Wt8UO
+search-only-key(id=2) = Tm15ZDkpHb4ZAAfi6Twb2AfyQQF2AuyP
 
 ```
-## profit!
+
+## key management
+
 ```bash
-# create book collection and fields
-curl "https://ts.jp.ngrok.io/collections" \
+# creating admin key
+
+curl 'https://ts-ccwps.ap.ngrok.io/keys' \
     -X POST \
-    -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" \
+    -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" \
+    -H 'Content-Type: application/json' \
+    -d '{"description":"Admin key.","actions": ["*"], "collections": ["*"]}'
+
+#creating search-only key
+curl 'https://ts-ccwps.ap.ngrok.io/keys' \
+    -X POST \
+    -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" \
+    -H 'Content-Type: application/json' \
+    -d '{"description":"Search-only items key.","actions": ["*"], "collections": ["*"]}'
+
+# list all key
+curl 'https://ts-ccwps.ap.ngrok.io/keys' \
+    -X GET \
+    -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" 
+
+# delete key
+curl 'https://ts-ccwps.ap.ngrok.io/keys/0' \
+    -X DELETE \
+    -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ"    
+```
+
+
+## Test collections
+```bash
+# health ckeck
+curl https://ts-ccwps.ap.ngrok.io:443/health
+
+# create book collection and fields
+curl "https://ts-ccwps.ap.ngrok.io/collections" \
+    -X POST \
+    -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" \
     -d '{
             "name": "books",
             "fields": [
@@ -34,40 +63,82 @@ curl "https://ts.jp.ngrok.io/collections" \
             ],
             "default_sorting_field": "ratings"
         }'
+
+# Retrieve a collection
+
+curl -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" \
+     -X GET \
+    "https://ts-ccwps.ap.ngrok.io/collections/items"
+
+# List all collections
+curl -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" \
+    "https://ts-ccwps.ap.ngrok.io/collections"
+
 # Insert 3 rows.
-curl "https://ts.jp.ngrok.io/collections/books/documents/import" \
+curl "https://ts-ccwps.ap.ngrok.io/collections/books/documents/import" \
     -X POST \
-    -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" \
+    -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" \
     -d '
         {"title":"Book 1","author": ["woonjjang", "sun"],"ratings":24}
         {"title":"Book 2","author": ["sun", "mozo"],"ratings":31}
         {"title":"Book 3","author": ["mozo", "woonjjang"],"ratings":30}'
+
 # search query
-curl "https://ts.jp.ngrok.io/collections/books/documents/search?query_by=title,author&q=su" \
-    -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s"
+curl "https://ts-ccwps.ap.ngrok.io/collections/items/documents/search?query_by=title&q=en" \
+    -H "X-TYPESENSE-API-KEY: Tm15ZDkpHb4ZAAfi6Twb2AfyQQF2AuyP"
+
 # search query --- facet!!!!
-curl -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" \
-    "https://ts.jp.ngrok.io/collections/books/documents/search?q=sun&query_by=title,author&facet_by=author"
+curl -H "X-TYPESENSE-API-KEY: Tm15ZDkpHb4ZAAfi6Twb2AfyQQF2AuyP" \
+    "https://ts-ccwps.ap.ngrok.io/collections/books/documents/search?q=sun&query_by=title,author&facet_by=author"
+
 # drop collection
-curl -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" -X DELETE \
-    "https://ts.jp.ngrok.io/collections/books"
+curl -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" -X DELETE \
+    "https://ts-ccwps.ap.ngrok.io/collections/books"
 
-#creating admin key
+```
 
-curl 'https://ts.jp.ngrok.io/keys' \
-    -X POST \
-    -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" \
-    -H 'Content-Type: application/json' \
-    -d '{"description":"Admin key.","actions": ["*"], "collections": ["*"]}'
+## item collection
+```bash
+# search query
+curl -H "Origin: https://ts-ccwps.ap.ngrok.io/collections/items/documents/search?query_by=title&q=us" --verbose  \
+    "X-TYPESENSE-API-KEY: xCkLkJy9dFCnOIRrqCsLz6FLB6P1hAGR96Og0SW9F7N866cH"  
 
-#creating search-only
-curl 'https://ts.jp.ngrok.io/keys' \
-    -X POST \
-    -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" \
-    -H 'Content-Type: application/json' \
-    -d '{"description":"Search-only companies key.","actions": ["documents:search"], "collections": ["companies"]}'
+# drop collection
+curl -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" -X DELETE \
+    "https://ts-ccwps.ap.ngrok.io/collections/items"
 
-# list all key
-curl 'https://ts.jp.ngrok.io/keys' \
-    -X GET \
-    -H "X-TYPESENSE-API-KEY: RbF9v3uCxFvI1U5S6Crpgz7QojiC6TZmJpjnIctENAYcXO0s" 
+# API Stats
+curl "https://ts-ccwps.ap.ngrok.io/stats.json" \
+        -H "X-TYPESENSE-API-KEY: xCkLkJy9dFCnOIRrqCsLz6FLB6P1hAGR96Og0SW9F7N866cH"
+
+# Export documents
+curl -H "X-TYPESENSE-API-KEY: jaLzda0hrFS86cy9naDxWbV1fKGeg4CAa2aARBpkN5G8uTnQ" -X GET \
+    "https://ts-ccwps.ap.ngrok.io/collections/itmes/documents/export"
+```
+## search
+- https://ts-ccwps.ap.ngrok.io/multi_search?x-typesense-api-key=Tm15ZDkpHb4ZAAfi6Twb2AfyQQF2AuyP?q=en&query_by=title
+```bash
+# Search
+curl -H "X-TYPESENSE-API-KEY: Tm15ZDkpHb4ZAAfi6Twb2AfyQQF2AuyP" \
+"https://ts-ccwps.ap.ngrok.io/collections/items/documents/search\
+?q=en&query_by=title"
+
+# Federated / Multi Search
+
+curl "https://ts-ccwps.ap.ngrok.io/multi_search?query_by=title" \
+        -X POST \
+        -H "Content-Type: application/json" \
+        -H "X-TYPESENSE-API-KEY: Tm15ZDkpHb4ZAAfi6Twb2AfyQQF2AuyP" \
+        -d '{
+          "searches": [
+            {
+              "collection": "items",
+              "q": "korea"
+            },
+            {
+              "collection": "items",
+              "q": "en"
+            }
+          ]
+        }'
+```

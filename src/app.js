@@ -304,30 +304,35 @@ search.addWidgets([
     templates: {
       item: `
         <div>
-            <div class="row mt-5">
-                <div class="col-md">
-                    <h5>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h5>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-md">
-                  {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-md">
-                  {{#helpers.highlight}}{ "attribute": "shotlist" }{{/helpers.highlight}}
-                </div>
-            </div>
-            <div class="row mt-auto">
+          <div class="row">
               <div class="col-md">
-                <div class="hit-price font-weight-bold mt-4">출처:{{sources}}</div>
-                <div class="hit-rating font-weight-bold">장소:{{venues}}</div>
-                <div class="hit-rating font-weight-bold">생산자:{{creators}}</div>
-                <div class="hit-rating font-weight-bold">주제:{{subjects}}</div>
+                  <a href="{{url}}"><img class="w-100" src="{{components}}" alt="{{title}}"></a> 
               </div>
+          </div>
+          <div class="row mt-5">
+              <div class="col-md">
+                  <h5>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h5>
+              </div>
+          </div>
+          <div class="row mt-2">
+              <div class="col-md">
+                {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
+              </div>
+          </div>
+          <div class="row mt-2">
+              <div class="col-md">
+                {{#helpers.highlight}}{ "attribute": "shotlist" }{{/helpers.highlight}}
+              </div>
+          </div>
+          <div class="row mt-auto">
+            <div class="col-md">
+              <div class="hit-price font-weight-bold mt-4">출처:{{sources}}</div>
+              <div class="hit-rating font-weight-bold">장소:{{venues}}</div>
+              <div class="hit-rating font-weight-bold">생산자:{{creators}}</div>
+              <div class="hit-rating font-weight-bold">주제:{{subjects}}</div>
             </div>
-            <a href="{{url}}">[아이템 보기]</a>  
+          </div>
+          <a href="https://ccwps.org/items{{url}}">[아이템 보기]</a>  
         </div>
       `,
     },

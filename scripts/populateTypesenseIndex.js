@@ -37,13 +37,13 @@ module.exports = (async () => {
       {
         name: "rg",
         type: "string",
-        facet: true
+        facet: false
       },
       {
-        name: "weight",
+        name: "rg",
         type: "int32",
         facet: false
-      },      
+      },            
       {
         name: "series",
         type: "string",
