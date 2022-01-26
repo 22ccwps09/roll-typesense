@@ -30,32 +30,32 @@ module.exports = (async () => {
         facet: false
       },          
       {
-        name: "reference_code",
+        name: "slug",
         type: "int32",
         facet: false
       },
       {
-        name: "rg",
+        name: "level__rg",
         type: "string",
-        facet: false
-      },
-      {
-        name: "rg",
-        type: "int32",
         facet: false
       },            
       {
-        name: "series",
+        name: "level__series",
         type: "string",
         facet: true
       },
       {
-        name: "file",
+        name: "level__file",
         type: "string",
         facet: false
       },
       {
-        name: "local_identifier",
+        name: "level__file_number",
+        type: "int32",
+        facet: false
+      },      
+      {
+        name: "level__local_identifier",
         type: "string",
         facet: false
       },
@@ -110,7 +110,7 @@ module.exports = (async () => {
         facet: false
       },
       {
-        name: "url",
+        name: "target",
         type: "string",
         facet: false
       },                                                   
@@ -124,7 +124,7 @@ module.exports = (async () => {
 
   console.log("Populating index in Typesense");
 
-  const items = require("./data/items.json");
+  const items = require("./data/items-20220127.json");
 
   let reindexNeeded = false;
   try {

@@ -306,7 +306,7 @@ search.addWidgets([
         <div>
           <div class="row">
               <div class="col-md">
-                  <a href="https://ccwps.org/items{{url}}"><img class="w-100" src="{{components}}" alt="{{title}}"></a> 
+                  <a href="{{target}}"><img class="w-100" src="{{components}}" alt="{{title}}"></a> 
               </div>
           </div>
           <div class="row mt-5">
@@ -332,7 +332,7 @@ search.addWidgets([
               <div class="hit-rating font-weight-bold">주제:{{subjects}}</div>
             </div>
           </div>
-          <a href="https://ccwps.org/items{{url}}">[아이템 보기]</a>  
+          <a href="{{target}}">[{{target}}]</a>  
         </div>
       `,
     },
