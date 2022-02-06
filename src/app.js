@@ -78,7 +78,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     // The following parameters are directly passed to Typesense's search API endpoint.
     //  So you can pass any parameters supported by the search endpoint below.
     //  queryBy is required.
-    queryBy: 'description', 
+    queryBy: 'level__local_identifier,title,description,shotlist',
     numTypos: 1,
     typoTokensThreshold: 0,
     // groupLimit: 1
@@ -311,7 +311,8 @@ search.addWidgets([
           </div>
           <div class="row mt-5">
               <div class="col-md">
-                  <h5>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h5>
+                  <h5>{{#helpers.highlight}}{ "attribute": "level__local_identifier" }{{/helpers.highlight}}</h5>
+                  <h3>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</h3>
               </div>
           </div>
           <div class="row mt-2">

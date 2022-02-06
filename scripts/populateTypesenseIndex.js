@@ -124,7 +124,7 @@ module.exports = (async () => {
 
   console.log("Populating index in Typesense");
 
-  const items = require("./data/items-20220127.json");
+  const items = require("./data/items-20220206.json");
 
   let reindexNeeded = false;
   try {

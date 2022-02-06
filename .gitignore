@@ -27,3 +27,4 @@ yarn-error.log*
 typesense-server-data
 scripts/data/items.json
 scripts/data/items-1st.json
+scripts/data/items-20220206.json
